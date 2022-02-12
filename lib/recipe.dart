@@ -4,11 +4,11 @@ class Recipe {
 
   // TODO: Add serving and ingredients here
 
-  Recipe {
+  Recipe(
     this.label,
     this.imageUrl,
-  };
-  
+  );
+
   static List<Recipe> samples = [
     Recipe(
       'Spaghetti and Meatballs',
@@ -17,9 +17,10 @@ class Recipe {
     Recipe(
       'Tomato Soup',
       'assets/27729023535_a57606c1be.jpg',
-    ), Recipe(
+    ),
+    Recipe(
       'Grilled Cheese',
-       'assets/3187380632_5056654a19_b.jpg',
+      'assets/3187380632_5056654a19_b.jpg',
     ),
     Recipe(
       'Chocolate Chip Cookies',
