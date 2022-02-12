@@ -61,8 +61,23 @@ class _MyHomePageState extends State<MyHomePage> {
           // 6
           itemBuilder: (BuildContext context, int index) {
             // 7
-            // TODO: Update to return Recipe card
-            return buildRecipeCard(Recipe.samples[index]);
+            return GestureDetector(
+              // 8
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) {
+                      // 10
+                      // TODO: Replace return with return RecipeDetail()
+                      return Text('Detail Page');
+                    },
+                  ),
+                );
+              },
+              // 11
+              child: buildRecipeCard(Recipe.samples[index]),
+            );
           },
         ),
       ),
