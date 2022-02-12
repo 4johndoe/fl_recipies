@@ -45,7 +45,7 @@ class _RecipeDetailState extends State<RecipeDetail> {
             // 6
             Text(
               widget.recipe.label,
-              style: const TextStyle(fontStyle: 18),
+              style: const TextStyle(fontSize: 18),
             ),
             // TODO: Add Expanded
             // TODO: Add Slider() here
