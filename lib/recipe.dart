@@ -8,7 +8,13 @@ class Recipe {
     this.label,
     this.imageUrl,
   };
-  // TODO: Add List<Recipe> here
+  
+  static List<Recipe> samples = [
+    Recipe(
+      'Spaghetti and Meatballs',
+      'assets/2126711929_ef763de2b3_w.jpg',
+    ),
+  ];
 }
 
 // TODO: Add Ingredients() here

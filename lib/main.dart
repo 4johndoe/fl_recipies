@@ -45,11 +45,16 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
+    // 1
     return Scaffold(
+      // 2
       appBar: AppBar(
         title: Text(widget.title),
       ),
+      // 3
       body: SafeArea(
+        // TODO: Replace child: Container()
+        // 4
         child: Container(),
       ),
     );
