@@ -23,6 +23,7 @@ class ExploreScreen extends StatelessWidget {
         if (snapshot.connectionState == ConnectionState.done) {
           // 5
           final recipes = snapshot.data?.todayRecipes ?? [];
+
           return TodayRecipeListView(recipes: recipes);
         } else {
           // 6
