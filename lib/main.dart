@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 
 import 'fooderlich_theme.dart';
 import 'home.dart';
+import 'models/models.dart';
 
 void main() {
   runApp(const Fooderlich());
