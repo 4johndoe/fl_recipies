@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fooderlich/components/grocery_tile.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:intl/intl.dart';
@@ -97,8 +98,24 @@ class _GroceryItemScreenState extends State<GroceryItemScreen> {
             buildTimeField(context),
             const SizedBox(height: 10.0),
             buildColorPicker(context),
-            // TODO 18: Add slider
-            // TODO: 19: Add Grocery Tile
+            const SizedBox(height: 10.0),
+            buildQuantityField(),
+            GroceryTile(
+              item: GroceryItem(
+                id: 'previewMode',
+                name: _name,
+                importance: _importance,
+                color: _currentColor,
+                quantity: _currentSliderValue,
+                date: DateTime(
+                  _dueDate.year,
+                  _dueDate.month,
+                  _dueDate.day,
+                  _timeOfDay.hour,
+                  _timeOfDay.minute,
+                ),
+              ),
+            ),
           ],
         ),
       ),
@@ -334,5 +351,49 @@ class _GroceryItemScreenState extends State<GroceryItemScreen> {
     );
   }
 
-  // TODO: Add buildQuantityField()
+  Widget buildQuantityField() {
+    // 1
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        // 2
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.baseline,
+          textBaseline: TextBaseline.alphabetic,
+          children: [
+            Text(
+              'Quantity',
+              style: GoogleFonts.lato(fontSize: 28.0),
+            ),
+            const SizedBox(width: 16.0),
+            Text(
+              _currentSliderValue.toInt().toString(),
+              style: GoogleFonts.lato(fontSize: 18.0),
+            ),
+          ],
+        ),
+        // 3
+        Slider(
+          // 4
+          inactiveColor: _currentColor.withOpacity(0.5),
+          activeColor: _currentColor,
+          // 5
+          value: _currentSliderValue.toDouble(),
+          // 6
+          min: 0.0,
+          max: 100.0,
+          // 7
+          divisions: 100,
+          // 8
+          label: _currentSliderValue.toInt().toString(),
+          // 9
+          onChanged: (double value) {
+            setState(() {
+              _currentSliderValue = value.toInt();
+            });
+          },
+        ),
+      ],
+    );
+  }
 }
