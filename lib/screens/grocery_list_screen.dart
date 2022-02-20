@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fooderlich/components/grocery_tile.dart';
 import 'package:fooderlich/models/grocery_manager.dart';
+import 'package:fooderlich/screens/grocery_item_screen.dart';
 
 class GroceryListScreen extends StatelessWidget {
   final GroceryManager manager;
@@ -24,7 +25,36 @@ class GroceryListScreen extends StatelessWidget {
         itemBuilder: (context, index) {
           final item = groceryItems[index];
           // TODO 28: Wrap in a Dismissable
-          // TODO 27: Wrap in a InkWell
+          return InkWell(
+            child: GroceryTile(
+              key: Key(item.id),
+              item: item,
+              onComplete: (change) {
+                if (change != null) {
+                  manager.completeItem(index, change);
+                }
+              },
+            ),
+            // 2
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => GroceryItemScreen(
+                    originalItem: item,
+                    onUpdate: (item) {
+                      // 4
+                      manager.updateItem(item, index);
+                      // 5
+                      Navigator.pop(context);
+                    },
+                    // 6
+                    onCreate: (item) {},
+                  ),
+                ),
+              );
+            },
+          );
           // 5
           return GroceryTile(
             key: Key(item.id),
