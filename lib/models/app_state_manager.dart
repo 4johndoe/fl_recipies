@@ -24,7 +24,18 @@ class AppStateManager extends ChangeNotifier {
   bool get isOnboardingComplete => _onboardingComplete;
   int get getSelectedTab => _selectedTab;
 
-  // TODO: Add initializeApp
+  void initializeApp() {
+    // 7
+    Timer(
+      const Duration(milliseconds: 2000),
+      () {
+        // 8
+        _initialized = true;
+        // 9
+        notifyListeners();
+      },
+    );
+  }
   // TODO: Add login
   // TODO: Add completeOnboarding
   // TODO: Add goToTab
