@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fooderlich/models/tab_manager.dart';
 
 import 'package:fooderlich/screens/explore_screen.dart';
 import 'package:provider/provider.dart';
