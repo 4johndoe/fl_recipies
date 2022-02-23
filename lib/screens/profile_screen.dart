@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fooderlich/main.dart';
+import 'package:fooderlich/models/app_state_manager.dart';
 import 'package:provider/provider.dart';
 
 import '../components/circle_image.dart';
@@ -66,7 +67,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
         ListTile(
           title: const Text('Log out'),
           onTap: () {
-            // TODO: Logout user
+            // 1
+            Provider.of<ProfileManager>(context, listen: false)
+                .tapOnProfile(false);
+            // 2
+            Provider.of<AppStateManager>(context, listen: false).logout();
           },
         )
       ],
