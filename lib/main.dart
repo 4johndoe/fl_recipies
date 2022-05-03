@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:fooderlich/models/app_state_manager.dart';
 import 'package:provider/provider.dart';
 
 import 'fooderlich_theme.dart';
@@ -24,6 +23,7 @@ class _FooderlichState extends State<Fooderlich> {
   final _profileManager = ProfileManager();
   final _appStateManager = AppStateManager();
   late AppRouter _appRouter;
+  // TODO: Initialize RouteInformationParser
 
   @override
   void initState() {
@@ -39,15 +39,13 @@ class _FooderlichState extends State<Fooderlich> {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(
-          create: (context) => _groceryManager,
-        ),
-        ChangeNotifierProvider(
-          create: (context) => _profileManager,
-        ),
+        ChangeNotifierProvider(create: (context) => _groceryManager),
         ChangeNotifierProvider(
           create: (context) => _appStateManager,
         ),
+        ChangeNotifierProvider(
+          create: (context) => _profileManager,
+        )
       ],
       child: Consumer<ProfileManager>(
         builder: (context, profileManager, child) {
@@ -57,7 +55,7 @@ class _FooderlichState extends State<Fooderlich> {
           } else {
             theme = FooderlichTheme.light();
           }
-
+          // TODO: Replace with Material.router
           return MaterialApp(
             theme: theme,
             title: 'Fooderlich',

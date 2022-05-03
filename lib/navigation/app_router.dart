@@ -1,21 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:fooderlich/models/app_state_manager.dart';
 
 import '../models/models.dart';
 import '../screens/screens.dart';
 
-// 1
-class AppRouter extends RouterDelegate
-    with ChangeNotifier, PopNavigatorRouterDelegateMixin {
-// 2
+class AppRouter extends RouterDelegate //TODO: Add <AppLink>
+    with
+        ChangeNotifier,
+        PopNavigatorRouterDelegateMixin {
   @override
   final GlobalKey<NavigatorState> navigatorKey;
-// 3
+
   final AppStateManager appStateManager;
-  // 4
   final GroceryManager groceryManager;
-  // 5
   final ProfileManager profileManager;
+
   AppRouter({
     required this.appStateManager,
     required this.groceryManager,
@@ -34,84 +32,73 @@ class AppRouter extends RouterDelegate
     super.dispose();
   }
 
-// 6
   @override
   Widget build(BuildContext context) {
-// 7
     return Navigator(
-      // 8
       key: navigatorKey,
       onPopPage: _handlePopPage,
-      // 9
       pages: [
-        if (!appStateManager.isInitialized) SplashScreen.page(),
-        if (appStateManager.isInitialized && !appStateManager.isLoggedIn)
+        if (!appStateManager.isInitialized) ...[
+          SplashScreen.page(),
+        ] else if (!appStateManager.isLoggedIn) ...[
           LoginScreen.page(),
-        if (appStateManager.isLoggedIn && !appStateManager.isOnboardingComplete)
+        ] else if (!appStateManager.isOnboardingComplete) ...[
           OnboardingScreen.page(),
-        if (appStateManager.isOnboardingComplete)
+        ] else ...[
           Home.page(appStateManager.getSelectedTab),
-        // 1
-        if (groceryManager.isCreatingNewItem)
-          // 2
-          GroceryItemScreen.page(
-            onCreate: (item) {
-              // 3
+          if (groceryManager.isCreatingNewItem)
+            GroceryItemScreen.page(onCreate: (item) {
               groceryManager.addItem(item);
-            },
-            onUpdate: (item, index) {
-              // 4 No update
-            },
-          ),
-        // 1
-        if (groceryManager.selectedIndex != -1)
-          // 2
-          GroceryItemScreen.page(
-            item: groceryManager.selectedGroceryItem,
-            index: groceryManager.selectedIndex,
-            onUpdate: (item, index) {
-              // 3
-              groceryManager.updateItem(item, index);
-            },
-            onCreate: (_) {
-              // 4 No create
-            },
-          ),
-        if (profileManager.didSelectUser)
-          ProfileScreen.page(profileManager.getUser),
-        if (profileManager.didTapOnRaywenderlich) WebViewScreen.page(),
+            }, onUpdate: (item, index) {
+              // No update
+            }),
+          if (groceryManager.selectedIndex != -1)
+            GroceryItemScreen.page(
+                item: groceryManager.selectedGroceryItem,
+                index: groceryManager.selectedIndex,
+                onCreate: (_) {
+                  // No create
+                },
+                onUpdate: (item, index) {
+                  groceryManager.updateItem(item, index);
+                }),
+          if (profileManager.didSelectUser)
+            ProfileScreen.page(profileManager.getUser),
+          if (profileManager.didTapOnRaywenderlich) WebViewScreen.page(),
+        ]
       ],
     );
   }
 
-  bool _handlePopPage(
-      // 1
-      Route<dynamic> route,
-      // 2
-      result) {
+  bool _handlePopPage(Route<dynamic> route, result) {
     if (!route.didPop(result)) {
-      // 4
       return false;
     }
 
-    // 5
     if (route.settings.name == FooderlichPages.onboardingPath) {
       appStateManager.logout();
     }
+
     if (route.settings.name == FooderlichPages.groceryItemDetails) {
       groceryManager.groceryItemTapped(-1);
     }
+
     if (route.settings.name == FooderlichPages.profilePath) {
       profileManager.tapOnProfile(false);
     }
+
     if (route.settings.name == FooderlichPages.raywenderlich) {
       profileManager.tapOnRaywenderlich(false);
     }
-    // 6
+
     return true;
   }
 
-// 10
+  // TODO: Convert app state to applink
+
+  // TODO: Apply configuration helper
+
+  // TODO: Replace setNewRoutePath
   @override
   Future<void> setNewRoutePath(configuration) async => null;
 }
