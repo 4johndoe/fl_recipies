@@ -37,3 +37,6 @@ flutter:
     - assets/sample_data/
     - assets/profile_pics/
     - assets/fooderlich_assets/
+    - assets/recipes1.json
+    - assets/recipes2.json
+    - assets/images/
